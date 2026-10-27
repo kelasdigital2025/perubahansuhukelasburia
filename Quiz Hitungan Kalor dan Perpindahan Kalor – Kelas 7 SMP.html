@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Quiz Hitungan Kalor dan Perpindahan Kalor – Kelas 7 SMP</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--tx:#1d2433;--mu:#5d6779;--bd:#d9deea;--ac:#e8590c;--acs:#fff1e6;--ok:#2b8a3e;--oks:#e6f6ea;--no:#c92a2a;--nos:#fdeaea;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14171f;--card:#1e222d;--tx:#eceff6;--mu:#9aa4b8;--bd:#333a4a;--ac:#ff8c42;--acs:#3a2a1e;--ok:#69db7c;--oks:#1d3324;--no:#ff8787;--nos:#3a2020}}
+:root[data-theme="dark"]{--bg:#14171f;--card:#1e222d;--tx:#eceff6;--mu:#9aa4b8;--bd:#333a4a;--ac:#ff8c42;--acs:#3a2a1e;--ok:#69db7c;--oks:#1d3324;--no:#ff8787;--nos:#3a2020}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.55}
+.w{max-width:680px;margin:0 auto;padding:16px}
+.c{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:20px;margin-bottom:14px}
+h1{font-size:1.45rem;margin:0 0 8px}h2{font-size:1.15rem;margin:0 0 10px}
+.mu{color:var(--mu);font-size:.92rem}
+button{font:inherit;cursor:pointer}
+.btn{background:var(--ac);color:#fff;border:0;border-radius:10px;padding:12px 20px;font-weight:600;width:100%;margin-top:14px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.opt{display:block;width:100%;text-align:left;background:var(--card);color:var(--tx);border:2px solid var(--bd);border-radius:10px;padding:12px 14px;margin-top:10px}
+.opt:hover{border-color:var(--ac)}
+.opt.sel{border-color:var(--ac);background:var(--acs)}
+.bar{height:8px;background:var(--bd);border-radius:6px;overflow:hidden;margin-bottom:12px}
+.bar i{display:block;height:100%;background:var(--ac)}
+.ref{background:var(--acs);border-radius:10px;padding:10px 12px;font-size:.85rem;margin-top:14px}
+.q{font-size:1.08rem;font-weight:600}
+.score{font-size:3.4rem;font-weight:800;color:var(--ac);line-height:1}
+.row{display:flex;justify-content:space-between;gap:10px;font-size:.95rem;margin-top:10px}
+.pill{display:inline-block;padding:2px 10px;border-radius:20px;font-size:.8rem;font-weight:600}
+.g{background:var(--oks);color:var(--ok)}.r{background:var(--nos);color:var(--no)}
+.rv{border-left:4px solid var(--no);padding:8px 12px;margin-top:12px;background:var(--nos);border-radius:0 8px 8px 0;font-size:.92rem}
+.rv b{display:block}
+.lock{text-align:center;font-size:.9rem;color:var(--mu);padding:8px}
+</style>
+</head>
+<body>
+<div class="w" id="app"></div>
+<script>
+// Format: [soal, [jawaban benar, salah1, salah2, salah3], pembahasan]
+var Q=[
+["Sebanyak 2 kg air dipanaskan sehingga suhunya naik 20 °C. Berapa kalor yang diserap air? (c air = 4.200 J/kg°C)",["168.000 J","84.000 J","8.400 J","336.000 J"],"Q = m × c × ΔT = 2 × 4.200 × 20 = 168.000 J"],
+["Balok besi bermassa 3 kg (c = 450 J/kg°C) dipanaskan hingga suhunya naik 40 °C. Kalor yang diperlukan adalah ...",["54.000 J","18.000 J","108.000 J","5.400 J"],"Q = 3 × 450 × 40 = 54.000 J"],
+["Aluminium 0,5 kg (c = 900 J/kg°C) dipanaskan dari 20 °C menjadi 60 °C. Kalor yang diserap adalah ...",["18.000 J","9.000 J","36.000 J","27.000 J"],"ΔT = 60 − 20 = 40 °C. Q = 0,5 × 900 × 40 = 18.000 J"],
+["Kalor 84.000 J diberikan pada 1 kg air (c = 4.200 J/kg°C). Kenaikan suhu air adalah ...",["20 °C","10 °C","40 °C","5 °C"],"ΔT = Q ÷ (m × c) = 84.000 ÷ (1 × 4.200) = 20 °C"],
+["Air 0,5 kg bersuhu 30 °C menerima kalor 42.000 J (c = 4.200 J/kg°C). Suhu akhir air adalah ...",["50 °C","40 °C","60 °C","70 °C"],"ΔT = 42.000 ÷ (0,5 × 4.200) = 20 °C. Suhu akhir = 30 + 20 = 50 °C"],
+["Sebuah benda bermassa 2 kg memiliki kalor jenis 500 J/kg°C. Kapasitas kalor benda tersebut adalah ...",["1.000 J/°C","250 J/°C","2.500 J/°C","100 J/°C"],"C = m × c = 2 × 500 = 1.000 J/°C"],
+["Kapasitas kalor suatu benda 800 J/°C. Kalor yang dibutuhkan agar suhunya naik 25 °C adalah ...",["20.000 J","2.000 J","200.000 J","32 J"],"Q = C × ΔT = 800 × 25 = 20.000 J"],
+["Batang tembaga 2 kg (c = 390 J/kg°C) didinginkan dari 100 °C menjadi 50 °C. Kalor yang dilepaskan adalah ...",["39.000 J","78.000 J","19.500 J","3.900 J"],"ΔT = 50 °C. Q = 2 × 390 × 50 = 39.000 J"],
+["Zat bermassa 2 kg menyerap kalor 36.000 J sehingga suhunya naik 20 °C. Kalor jenis zat tersebut adalah ...",["900 J/kg°C","450 J/kg°C","1.800 J/kg°C","3.600 J/kg°C"],"c = Q ÷ (m × ΔT) = 36.000 ÷ (2 × 20) = 900 J/kg°C"],
+["Logam 0,2 kg dipanaskan dari 10 °C ke 60 °C dengan kalor 4.500 J. Kalor jenis logam tersebut adalah ...",["450 J/kg°C","225 J/kg°C","900 J/kg°C","2.250 J/kg°C"],"ΔT = 50 °C. c = 4.500 ÷ (0,2 × 50) = 450 J/kg°C"],
+["Kalor 63.000 J menaikkan suhu air sebesar 15 °C (c = 4.200 J/kg°C). Massa air tersebut adalah ...",["1 kg","0,5 kg","2 kg","1,5 kg"],"m = Q ÷ (c × ΔT) = 63.000 ÷ (4.200 × 15) = 1 kg"],
+["Pemanas listrik berdaya 1.000 W menyala selama 2 menit. Kalor yang dihasilkan adalah ...",["120.000 J","2.000 J","12.000 J","60.000 J"],"t = 2 × 60 = 120 s. Q = P × t = 1.000 × 120 = 120.000 J"],
+["Pemanas 840 W menyala 5 menit untuk memanaskan 2 kg air (c = 4.200 J/kg°C), tanpa ada kalor yang hilang. Kenaikan suhu air adalah ...",["30 °C","15 °C","60 °C","45 °C"],"Q = 840 × 300 = 252.000 J. ΔT = 252.000 ÷ (2 × 4.200) = 30 °C"],
+["Es bermassa 2 kg pada 0 °C melebur seluruhnya (kalor lebur es = 336.000 J/kg). Kalor yang diperlukan adalah ...",["672.000 J","336.000 J","168.000 J","1.344.000 J"],"Q = m × L = 2 × 336.000 = 672.000 J"],
+["Berapa kalor yang diperlukan untuk melebur 0,5 kg es pada 0 °C? (L = 336.000 J/kg)",["168.000 J","84.000 J","336.000 J","672.000 J"],"Q = 0,5 × 336.000 = 168.000 J"],
+["Sebanyak 0,2 kg air pada 100 °C menguap seluruhnya (kalor uap air = 2.260.000 J/kg). Kalor yang diperlukan adalah ...",["452.000 J","226.000 J","904.000 J","113.000 J"],"Q = m × U = 0,2 × 2.260.000 = 452.000 J"],
+["Kalor 672.000 J digunakan untuk melebur es pada 0 °C (L = 336.000 J/kg). Massa es yang melebur adalah ...",["2 kg","1 kg","3 kg","0,5 kg"],"m = Q ÷ L = 672.000 ÷ 336.000 = 2 kg"],
+["Untuk melebur 0,5 kg es pada 0 °C diperlukan kalor 168.000 J. Kalor lebur es tersebut adalah ...",["336.000 J/kg","168.000 J/kg","84.000 J/kg","672.000 J/kg"],"L = Q ÷ m = 168.000 ÷ 0,5 = 336.000 J/kg"],
+["Berapa kalor yang diperlukan untuk menguapkan 0,1 kg air pada 100 °C? (U = 2.260.000 J/kg)",["226.000 J","22.600 J","2.260.000 J","113.000 J"],"Q = 0,1 × 2.260.000 = 226.000 J"],
+["Es 1 kg bersuhu −10 °C dipanaskan hingga 0 °C (c es = 2.100 J/kg°C). Kalor yang diperlukan adalah ...",["21.000 J","2.100 J","210.000 J","42.000 J"],"ΔT = 10 °C. Q = 1 × 2.100 × 10 = 21.000 J"],
+["Es 1 kg pada 0 °C diubah menjadi air bersuhu 10 °C. Total kalor yang diperlukan adalah ... (L = 336.000 J/kg, c air = 4.200 J/kg°C)",["378.000 J","336.000 J","420.000 J","294.000 J"],"Melebur: 336.000 J. Memanaskan air: 1 × 4.200 × 10 = 42.000 J. Total = 378.000 J"],
+["Air 1 kg bersuhu 80 °C dicampur dengan air 1 kg bersuhu 20 °C. Suhu campuran adalah ...",["50 °C","40 °C","60 °C","100 °C"],"Massa sama, jadi suhu campuran = (80 + 20) ÷ 2 = 50 °C"],
+["Air 2 kg bersuhu 20 °C dicampur dengan air 1 kg bersuhu 80 °C. Suhu campuran adalah ...",["40 °C","50 °C","45 °C","60 °C"],"T = (2×20 + 1×80) ÷ (2+1) = 120 ÷ 3 = 40 °C"],
+["Air panas 200 g bersuhu 90 °C dicampur air dingin 300 g bersuhu 40 °C. Suhu campuran adalah ...",["60 °C","55 °C","65 °C","70 °C"],"T = (200×90 + 300×40) ÷ 500 = 30.000 ÷ 500 = 60 °C"],
+["Sebuah penghantar merambatkan kalor 6.000 J dalam waktu 30 sekon. Laju perpindahan kalornya adalah ...",["200 J/s","20 J/s","2.000 J/s","180.000 J/s"],"H = Q ÷ t = 6.000 ÷ 30 = 200 J/s (200 W)"],
+["Pada peristiwa konduksi, batang logam menghantarkan kalor 15.000 J dalam 5 menit. Laju perpindahan kalornya adalah ...",["50 J/s","75 J/s","3.000 J/s","5 J/s"],"t = 5 × 60 = 300 s. H = 15.000 ÷ 300 = 50 J/s"],
+["Panel surya seluas 2 m² menerima radiasi matahari 800 J tiap sekon setiap m². Energi yang diterima selama 10 sekon adalah ...",["16.000 J","1.600 J","8.000 J","160.000 J"],"Daya = 800 × 2 = 1.600 W. Energi = 1.600 × 10 = 16.000 J"],
+["Pada pemanas ruangan (konveksi), 2 kg air dalam radiator turun suhunya 10 °C dan melepas kalor ke udara (c = 4.200 J/kg°C). Kalor yang dilepas adalah ...",["84.000 J","8.400 J","42.000 J","168.000 J"],"Q = 2 × 4.200 × 10 = 84.000 J"],
+["Sebuah batang menghantarkan kalor 40 J/s. Jika luas penampangnya dijadikan 3 kali (bahan, panjang, dan beda suhu sama), laju konduksinya menjadi ...",["120 J/s","13,3 J/s","80 J/s","160 J/s"],"Laju konduksi sebanding dengan luas penampang. 3 × 40 = 120 J/s"],
+["Sebuah batang menghantarkan kalor 60 J/s. Jika panjang batang dijadikan 2 kali (bahan, luas, dan beda suhu sama), laju konduksinya menjadi ...",["30 J/s","120 J/s","60 J/s","15 J/s"],"Laju konduksi berbanding terbalik dengan panjang. 60 ÷ 2 = 30 J/s"]
+];
+var TOP=[["Kalor, kalor jenis, dan kapasitas kalor (Q = m·c·ΔT)",0,13],["Perubahan wujud (kalor lebur dan kalor uap)",13,21],["Asas Black (pencampuran)",21,24],["Laju perpindahan kalor (konduksi, konveksi, radiasi)",24,30]];
+var KEY="quiz_kalor_smp7_v1", app=document.getElementById("app"), S=null, pick=null;
+
+function load(){try{var r=localStorage.getItem(KEY);if(r)S=JSON.parse(r)}catch(e){}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+
+function start(){
+  S={opts:Q.map(function(q){return shuf(q[1])}),ans:[],i:0,done:false};
+  save();render();
+}
+
+function render(){
+  if(!S) return home();
+  if(S.done) return result();
+  question();
+}
+
+function home(){
+  app.innerHTML='<div class="c"><h1>🔥 Quiz Hitungan Kalor dan Perpindahan Kalor</h1>'+
+  '<p class="mu">IPA Kelas 7 SMP · 30 soal hitungan · pilihan ganda</p>'+
+  '<p><b>Aturan:</b></p><ul><li>Kuis ini <b>hanya bisa dimainkan satu kali</b>.</li><li>Jawaban tidak bisa diubah setelah menekan Lanjut.</li><li>Skor dan evaluasi muncul setelah soal ke-30.</li><li>Boleh memakai kertas dan kalkulator untuk menghitung.</li></ul>'+
+  '<div class="ref"><b>Konstanta yang dipakai:</b><br>c air = 4.200 J/kg°C · c es = 2.100 J/kg°C<br>Kalor lebur es = 336.000 J/kg · Kalor uap air = 2.260.000 J/kg</div>'+
+  '<button class="btn" id="go">Mulai Kuis (sekali main)</button></div>';
+  document.getElementById("go").onclick=start;
+}
+
+function question(){
+  var i=S.i,q=Q[i],o=S.opts[i];
+  var h='<div class="c"><div class="mu">Soal '+(i+1)+' dari '+Q.length+'</div><div class="bar"><i style="width:'+(i/Q.length*100)+'%"></i></div>'+
+  '<div class="q">'+esc(q[0])+'</div>';
+  o.forEach(function(t,k){h+='<button class="opt'+(pick===k?' sel':'')+'" data-k="'+k+'">'+String.fromCharCode(65+k)+'. '+esc(t)+'</button>'});
+  h+='<button class="btn" id="nx" '+(pick===null?'disabled':'')+'>'+(i===Q.length-1?'Selesai dan lihat hasil':'Lanjut')+'</button>'+
+  '<div class="ref">c air 4.200 · c es 2.100 (J/kg°C) · L es 336.000 · U air 2.260.000 (J/kg)</div></div>';
+  app.innerHTML=h;
+  Array.prototype.forEach.call(app.querySelectorAll(".opt"),function(b){b.onclick=function(){pick=+b.dataset.k;question()}});
+  document.getElementById("nx").onclick=function(){
+    if(pick===null)return;
+    S.ans[i]=o[pick];pick=null;
+    if(i===Q.length-1){S.done=true}else{S.i=i+1}
+    save();render();window.scrollTo(0,0);
+  };
+}
+
+function result(){
+  var ok=0,tp=TOP.map(function(){return 0}),wrong=[];
+  Q.forEach(function(q,i){
+    var good=S.ans[i]===q[1][0];
+    if(good){ok++;TOP.forEach(function(t,k){if(i>=t[1]&&i<t[2])tp[k]++})}else wrong.push(i);
+  });
+  var sc=Math.round(ok/Q.length*100);
+  var lv=sc>=85?["Sangat Baik","Kamu sudah sangat paham perhitungan kalor. Pertahankan!"]:sc>=70?["Baik","Pemahamanmu sudah baik. Perbaiki beberapa soal yang masih salah."]:sc>=55?["Cukup","Konsepmu mulai terbentuk. Perbanyak latihan menghitung dan pelajari pembahasan di bawah."]:["Perlu Belajar Lagi","Pelajari lagi rumus dan contoh soal, lalu diskusikan dengan guru atau teman."];
+  var h='<div class="c" style="text-align:center"><div class="mu">Skor akhir kamu</div><div class="score">'+sc+'</div>'+
+  '<p style="margin:8px 0 0"><b>'+lv[0]+'</b> · '+ok+' benar dari '+Q.length+' soal</p><p class="mu">'+lv[1]+'</p></div>';
+  h+='<div class="c"><h2>Evaluasi per materi</h2>';
+  TOP.forEach(function(t,k){
+    var n=t[2]-t[1],p=Math.round(tp[k]/n*100),g=p>=75;
+    h+='<div class="row"><span>'+t[0]+'</span><span class="pill '+(g?'g':'r')+'">'+tp[k]+'/'+n+'</span></div>'+
+    '<div class="mu">'+(g?'Sudah dikuasai dengan baik.':'Perlu latihan lagi pada materi ini.')+'</div>';
+  });
+  h+='</div><div class="c"><h2>Pembahasan soal yang salah ('+wrong.length+')</h2>';
+  if(!wrong.length)h+='<p>Luar biasa, semua jawabanmu benar! 🎉</p>';
+  wrong.forEach(function(i){
+    h+='<div class="rv"><b>Soal '+(i+1)+': '+esc(Q[i][0])+'</b>Jawabanmu: '+esc(S.ans[i])+'<br>Jawaban benar: <b style="display:inline">'+esc(Q[i][1][0])+'</b><br>'+esc(Q[i][2])+'</div>';
+  });
+  h+='</div><div class="lock">🔒 Kuis ini sudah selesai dan tidak dapat dimainkan lagi.</div>';
+  app.innerHTML=h;
+}
+
+load();render();
+</script>
+</body>
+</html>
